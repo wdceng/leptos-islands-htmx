@@ -1,0 +1,3 @@
+# The stable options of Leptos's own rustfmt.toml, so the code stays as in the Leptos repo.
+edition = "2021"
+max_width = 80

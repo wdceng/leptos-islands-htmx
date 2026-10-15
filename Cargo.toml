@@ -1,0 +1,38 @@
+[package]
+name = "leptos-islands-htmx"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+description = "Leptos islands in pages that htmx swaps: wakes the islands swapped in, frees the ones swapped out"
+repository = "https://github.com/wdceng/leptos-islands-htmx"
+license = "MIT"
+keywords = ["leptos", "htmx", "islands", "wasm"]
+categories = ["web-programming", "wasm"]
+readme = "README.md"
+include = ["src/**", "README.md", "CHANGELOG.md", "LICENSE"]
+
+[dependencies]
+leptos = { version = "0.8.22", features = ["islands"] }
+
+# The collector's tests run in the browser, through wasm-bindgen's test runner.
+[target.'cfg(target_arch = "wasm32")'.dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[features]
+hydrate = ["leptos/hydrate"]
+ssr = ["leptos/ssr"]
+
+# docs.rs shows `mark_ready`, which only exists with `hydrate`.
+[package.metadata.docs.rs]
+features = ["hydrate"]
+rustdoc-args = ["--cfg", "docsrs"]
+
+[workspace]
+members = ["example"]
+
+[profile.wasm-release]
+inherits = "release"
+opt-level = 'z'
+lto = true
+codegen-units = 1
+panic = "abort"
